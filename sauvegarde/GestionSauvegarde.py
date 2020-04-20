@@ -233,15 +233,7 @@ class GestionSauvegarde():
 
 
 if __name__ == "__main__":
-#	lab = [0, 2, 1, 3, 4, 5]
-#	print(lab)
-#	pseudo = 'floTest'
-#	sauvegarde(pseudo, lab)
-#	lab2 = chargement(pseudo)
-#	print(lab2)
-#
-#	chx = fonction.ChoixLettre("ceci est un test", 'a', 'b', 'c')
-#	print(chx)
+
 
 	test = GestionSauvegarde()
 	print(test.__dict__)
