@@ -17,22 +17,22 @@ end = False
 while not end:
 
 	try:
-	
+
 		Robi = robot(lab)
 		gagne = False
-		
+
 		while not gagne:
-		
-			fonction.affichage(lab, obstacles)
-			dir, nb = fonction.deplacement()
+
+			fonction.Affichage(lab, obstacles)
+			dir, nb = fonction.Deplacement()
 			lab, gagne = Robi.mouve(dir, lab, nb)
 			GS.sauvegarde(pseudo, lab, obstacles)
-		
-		
-		fonction.affichage(lab, obstacles)
+
+
+		fonction.Affichage(lab, obstacles)
 		end = GS.finDePartie(pseudo, lab, obstacles, fin = 'oui')
 		if end == False:
 			lab = GS.choixCarte()
-		
+
 	except KeyboardInterrupt:
 		end = GS.finDePartie(pseudo, lab, obstacles)
