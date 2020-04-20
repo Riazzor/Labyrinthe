@@ -2,7 +2,7 @@ import os
 import sys
 sys.path[:0] = ['../']
 from DATA import fonction
-
+from sauvegarde import GestionSauvegarde as GS
 
 
 """ Ce module va contenir la classe robot qui sera représenté dans le jeu par 'X'.
@@ -10,7 +10,7 @@ from DATA import fonction
 
 
 
-class robot:
+class Robot:
 	"""La classe du robot à déplacer."""
 
 
@@ -45,7 +45,6 @@ class robot:
 
 		else:
 			direction = {'n' : self._nord, 's' : self._sud, 'e' : self._est, 'o' : self._ouest}
-			# print(direction)
 			peut_bouger = True
 			i = 0
 

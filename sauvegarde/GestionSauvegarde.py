@@ -9,10 +9,21 @@ from DATA import fonction
 	en '.lab' et seront tous dans le même dossier sauvegarde avec une hiérarchie selon le type de sauvegarde.
 	"""
 class GestionSauvegarde():
-	def choixPseudo():	#va servir à lister les pseudos des joueurs. Permettra ensuite de lancer les parties.
-		"""on fait choisir au joueur son pseudo. Ce pseudo est ajouter a la liste des pseudos. Si elle n'existe pas on l'a crée.
+	"""Classe a créer pour la gestion des sauvegardes.
+	Classe a appelé dans la classe robot"""
+
+
+	def __init__(self):
+		"""En se créant il demandera le pseudo, la carte.
+		la liste d'obstacles est alors créer."""
+		self.pseudo, self.lab, self.obstacles = self._choix_pseudo()
+
+	def _choix_pseudo(self):	#va servir à lister les pseudos des joueurs. Permettra ensuite de lancer les parties.
+		"""on fait choisir au joueur son pseudo. Ce pseudo est ajouter a la liste des pseudos.
+			Si elle n'existe pas on l'a crée.
 			Choix de carte si nouvelle partie, chargement de la partie si elle existe.
-			Renvoie le labyrinthe et la liste d'obstacle."""
+			Renvoie le pseudo, le labyrinthe et la liste d'obstacle qui seront
+			défini comme attributs de l'instance."""
 
 		pas_de_pseudo = True
 		while pas_de_pseudo:													#on s'assure d'avoir un pseudo de choisi.
@@ -35,21 +46,20 @@ class GestionSauvegarde():
 
 				if pseudo in liste_pseudo:											#si le pseudo existe, on récupère la partie.
 
-					lab, obstacles = _chargement(pseudo)
+					lab, obstacles = self._chargement(pseudo)
 				else:																#sinon on demande au joueur s'il veut une nouvelle partie
 					print(liste_pseudo)
 					chx = fonction.Affichage("Ce pseudo n'existe pas, voulez-vous lancer une nouvelle partie?", 'o', 'n')
 					if chx == 'o':
 						liste_pseudo.append(pseudo)
-						lab, obstacles = _nouvellePartie(pseudo)
+						lab, obstacles = self._nouvelle_partie(pseudo)
 					else:															#s'il ne veut pas, on relance la saisie du pseudo
 						continue
 
 			except FileNotFoundError: 											# autrement, on crée une nouvelle liste de pseudo. Cela implique une nouvelle partie.
 				liste_pseudo = []
 				liste_pseudo.append(pseudo)
-				# print("filenotfound", liste_pseudo)
-				lab, obstacles = _nouvellePartie(pseudo)
+				lab, obstacles = self._nouvelle_partie(pseudo)
 
 			pas_de_pseudo = False
 
@@ -61,7 +71,7 @@ class GestionSauvegarde():
 		return pseudo, lab, obstacles
 
 
-	def choixCarte():
+	def choixCarte(self):
 		#choix de la carte
 		"""Liste les cartes possibles. Fait ensuite choisir le joueur.
 			la carte est renvoyer sous forme de liste."""
@@ -100,16 +110,16 @@ class GestionSauvegarde():
 		return lab
 
 
-	def finDePartie(pseudo, lab, obstacles, fin = 'non'):
+	def fin_de_partie(self, pseudo, lab, obstacles, fin = 'non'):
 		"""fonction appelée si carte terminée ou si le joueur désire quitter la partie.
 			La partie est supprimée si le jeu est terminé."""
 
 		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 		if fin == 'non':
-			sauvegarde(pseudo, lab, obstacles)
+			self.sauvegarde(pseudo, lab, obstacles)
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
-			_suppression(pseudo)
+			self._suppression(pseudo)
 
 
 		if choix == 'o':
@@ -123,7 +133,7 @@ class GestionSauvegarde():
 
 
 	#sauvegarde de la partie sans qu'elle soit terminée.
-	def sauvegarde(pseudo, lab, obstacles):	#lab sera la liste contenant le labyrinthe et pseudo sera le pseudo du joueur.
+	def sauvegarde(self, pseudo, lab, obstacles):	#lab sera la liste contenant le labyrinthe et pseudo sera le pseudo du joueur.
 											# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
 		"""fonction de sauvegarde appelé à chaque déplacement et à la fermeture du jeu.
 			on inclus le pseudo pour le nom de la sauvegarde, et lab et obstacles qui seront contenus dans le fichier de sauvegarde."""
@@ -140,11 +150,11 @@ class GestionSauvegarde():
 
 
 
-	def _nouvellePartie(pseudo):
+	def _nouvelle_partie(self, pseudo):
 		"""fonction qui récupère la carte.
 		On sauvegarde ensuite la partie."""
 
-		lab = choixCarte()
+		lab = self.choixCarte()
 
 		# On va créer un dictionnaire des obstacles du labyrinthe. Pour l'instant de simple porte.
 		obstacles = {}
@@ -162,14 +172,14 @@ class GestionSauvegarde():
 			abs = 0
 		# for i in lab:
 			# print(i)
-		sauvegarde(pseudo, lab, obstacles)
+		self.sauvegarde(pseudo, lab, obstacles)
 
 		return lab, obstacles
 
 
 
 	#chargement d'une partie entamée non terminée
-	def _chargement(pseudo):
+	def _chargement(self, pseudo):
 		""" Va chercher la partie correspondant au pseudo.
 			On considère le pseudo déjà verifié."""
 
@@ -207,7 +217,7 @@ class GestionSauvegarde():
 
 
 
-	def _suppression(pseudo):
+	def _suppression(self, pseudo):
 		"""Cette fonction est appelé pour supprimer une partie une fois celle-ci gagnée. Egalement si besoin particulier.
 			De cette manière, lors de la prochaine connection une nouvelle carte peut-être chargée"""
 
@@ -233,6 +243,7 @@ if __name__ == "__main__":
 #	chx = fonction.ChoixLettre("ceci est un test", 'a', 'b', 'c')
 #	print(chx)
 
-	# choixPseudo()
+	test = GestionSauvegarde()
+	print(test.__dict__)
 
 	os.system("pause")

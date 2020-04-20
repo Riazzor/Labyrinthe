@@ -2,7 +2,7 @@
 
 import sauvegarde.GestionSauvegarde as GS
 from DATA import fonction
-from mouvement.robot import robot
+from mouvement.robot import Robot
 
 
 print('='*30)
@@ -12,13 +12,13 @@ print("LABYRINTHE".center(30, '='))
 print('='*30)
 print("Quitter : 'ctrl + c'")
 
-pseudo, lab, obstacles = GS.choixPseudo()
+
 end = False
 while not end:
 
 	try:
 
-		Robi = robot(lab)
+		Robi = Robot()
 		gagne = False
 
 		while not gagne:
@@ -30,7 +30,7 @@ while not end:
 
 
 		fonction.Affichage(lab, obstacles)
-		end = GS.finDePartie(pseudo, lab, obstacles, fin = 'oui')
+		end = GS.finDePartie(pseudo, lab, obstacles, fin='oui')
 		if end == False:
 			lab = GS.choixCarte()
 
