@@ -1,7 +1,7 @@
 import os
 import pickle
 import sys
-sys.path[:0]=['../']
+#sys.path[:0]=['../']
 from DATA import fonction
 # from mouvement.robot import robot
 
@@ -49,7 +49,7 @@ class GestionSauvegarde():
 					lab, obstacles = self._chargement(pseudo)
 				else:																#sinon on demande au joueur s'il veut une nouvelle partie
 					print(liste_pseudo)
-					chx = fonction.ChoixLettre("Ce pseudo n'existe pas, voulez-vous lancer une nouvelle partie?", 'o', 'n')
+					chx = fonction.Affichage("Ce pseudo n'existe pas, voulez-vous lancer une nouvelle partie?", 'o', 'n')
 					if chx == 'o':
 						liste_pseudo.append(pseudo)
 						lab, obstacles = self._nouvelle_partie(pseudo)
