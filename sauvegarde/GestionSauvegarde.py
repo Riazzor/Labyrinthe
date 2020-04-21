@@ -17,6 +17,7 @@ class GestionSauvegarde():
 		"""En se créant il demandera le pseudo, la carte.
 		la liste d'obstacles est alors créer."""
 		self.pseudo, self.lab, self.obstacles = self._choix_pseudo()
+		self.sauvegarde()
 
 #Séparer le choix du pseudo et la nouvelle partie permettra de lancer une nouvelle partie sans
 #changer de pseudo.
@@ -118,7 +119,7 @@ class GestionSauvegarde():
 
 		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 		if fin == 'non':
-			self._sauvegarde(self.pseudo)
+			self._sauvegarde()
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
 			self._suppression()
@@ -135,10 +136,10 @@ class GestionSauvegarde():
 
 
 	#sauvegarde de la partie sans qu'elle soit terminée.
-	def _sauvegarde(self, pseudo):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
+	def _sauvegarde(self):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
 		"""fonction de sauvegarde appelé à chaque déplacement et à la fermeture du jeu.
 			on inclus le pseudo pour le nom de la sauvegarde, et lab et obstacles qui seront contenus dans le fichier de sauvegarde."""
-		pseudo = '/' + pseudo + '.lab'
+		pseudo = '/' + self.pseudo + '.lab'
 		chemin = os.getcwd()
 		chemin += '/sauvegarde/Partie'
 		chemin += pseudo
@@ -169,8 +170,6 @@ class GestionSauvegarde():
 				abs += 1
 			ord += 1
 			abs = 0
-
-		self._sauvegarde(pseudo)
 
 		return lab, obstacles
 
