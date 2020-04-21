@@ -2,7 +2,7 @@ import os
 import pickle
 import sys
 sys.path[:0]=['../']
-from DATA import fonction
+from DATA import Fonction
 
 
 """Gestion des différentes sauvegardes de parties. Les fichiers de sauvegarde se termineront
@@ -52,7 +52,7 @@ class GestionSauvegarde():
 					lab, obstacles = self._chargement(pseudo)
 				else:																#sinon on demande au joueur s'il veut une nouvelle partie
 					print(liste_pseudo)
-					chx = fonction.ChoixLettre("Ce pseudo n'existe pas, voulez-vous lancer une nouvelle partie?", 'o', 'n')
+					chx = Fonction.ChoixLettre("Ce pseudo n'existe pas, voulez-vous lancer une nouvelle partie?", 'o', 'n')
 					if chx == 'o':
 						liste_pseudo.append(pseudo)
 						lab, obstacles = self._nouvelle_partie(pseudo)
@@ -119,7 +119,7 @@ class GestionSauvegarde():
 
 
 		if fin == 'non':
-			choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
+			choix = Fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 			self._sauvegarde()
 			if choix == 'o':
 				input("A la bonne week-end")
@@ -131,7 +131,7 @@ class GestionSauvegarde():
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
 			self._suppression()
-			choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
+			choix = Fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 			if choix == 'o':
 				input("A la bonne week-end")
 				continuer = False

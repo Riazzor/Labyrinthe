@@ -6,7 +6,7 @@ def Deplacement():
 		Renvoie la direction choisie et le nombre de déplacement."""
 	direction = ('n', 's', 'e', 'o', 'q')
 
-	# chx = fonction.ChoixLettre("tentative", *direction)
+	
 	chx = ''
 	while chx == '':
 		chx = input("Dans quel direction?").lower()

@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path[:0] = ['../']
-from DATA import fonction
+from DATA import Fonction
 from sauvegarde import GestionSauvegarde as GS
 
 
@@ -32,7 +32,7 @@ class Robot():
 			ord += 1
 			abs = 0
 
-		fonction.Affichage(_savy.lab, _savy.obstacles)
+		Fonction.Affichage(_savy.lab, _savy.obstacles)
 
 
 
@@ -43,7 +43,7 @@ class Robot():
 			Il déplace ensuite X à l'intèrieur de la carte donné en argument.
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
-		dir, nb = fonction.Deplacement()
+		dir, nb = Fonction.Deplacement()
 
 
 		if dir == 'q':
@@ -80,7 +80,7 @@ class Robot():
 
 			# on redéfinie la carte
 			_savy.lab[ord] = _savy.lab[ord][:abs] + 'X' + _savy.lab[ord][abs+1:]
-			fonction.Affichage(_savy.lab, _savy.obstacles)
+			Fonction.Affichage(_savy.lab, _savy.obstacles)
 
 		return continuer # on renvoie la carte pour l'affichage.
 

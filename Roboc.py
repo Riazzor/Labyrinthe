@@ -1,7 +1,7 @@
 # -*-coding:Utf-8 -*
 import sauvegarde.GestionSauvegarde as GS
-from DATA import fonction
-from mouvement.robot import Robot
+from DATA import Fonction
+from mouvement.Robot import Robot
 
 
 print('='*30)
