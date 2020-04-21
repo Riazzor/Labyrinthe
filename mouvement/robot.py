@@ -2,19 +2,18 @@ import os
 import sys
 sys.path[:0] = ['../']
 from DATA import fonction
-
+from sauvegarde import GestionSauvegarde as GS
 
 
 """ Ce module va contenir la classe robot qui sera représenté dans le jeu par 'X'.
 	X aura des coordonnées pour attributs et des méthodes pour le déplacement."""
 
+_saving = GS.GestionSauvegarde()
 
-	
-class robot:
+class Robot():
 	"""La classe du robot à déplacer."""
-	
-	
-	def __init__(self, lab):
+
+	def __init__(self):
 		"""abs sera l'abscisse(emplacement sur la ligne) et ord l'ordonne(sur la colonne).
 			abs et ord sont déterminé avec la lecture de la carte neuve.
 			Les déplacements se feront en modifiants directement ces attributs.
@@ -23,8 +22,8 @@ class robot:
 			"""
 		abs = 0
 		ord = 0
-		
-		for i in lab:
+		print("test")
+		for i in _saving.lab:
 			for j in i:
 				if j == 'X':
 					self.abs = abs
@@ -32,66 +31,66 @@ class robot:
 				abs += 1
 			ord += 1
 			abs = 0
+
+		fonction.Affichage(_saving.lab, _saving.obstacles)
 		
-		
-	def mouve(self, dir, lab, nb):
+
+
+
+	def mouve(self):
 		"""méthode appelé a chaque tour. dir sera une lettre 'n,s,e,o' pour choisir la direction
 			et appelé la méthode correspondante. nb sera le nombre de mouvement.
 			Il déplace ensuite X à l'intèrieur de la carte donné en argument.
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
+		dir, nb = fonction.Deplacement()
+
+
 		if dir == 'q':
-			exit()			#j'ai honte
-		
+			continuer = _saving.fin_de_partie()
+
 		else:
-			direction = {'n' : self._Nord, 's' : self._Sud, 'e' : self._Est, 'o' : self._Ouest}
-			# print(direction)
+			direction = {'n' : self._nord, 's' : self._sud, 'e' : self._est, 'o' : self._ouest}
 			peut_bouger = True
 			i = 0
-			
+
 			while (i in range(nb)) and peut_bouger:
 				# print('test : boucle n°', i+1)
-				peut_bouger = direction[dir](lab)
+				peut_bouger = direction[dir](_saving.lab)
 				i += 1
-				
+
 			abs = 0
 			ord = 0
-			
+
 			# on parcourt la carte et on efface l'ancienne position de X
-			for i in lab:	
+			for i in _saving.lab:
 				for j in i:
 					if j == 'X':
-						lab[ord] = lab[ord][:abs] + ' ' + lab[ord][abs+1:]
+						_saving.lab[ord] = _saving.lab[ord][:abs] + ' ' + _saving.lab[ord][abs+1:]
 					abs += 1
 				ord += 1
 				abs = 0
-			
-			
-			
-			
-			
-			
+
 			# on insère le nouvel emplacement de X
 			abs = self.abs
 			ord = self.ord
-			
+
 			# On regarde si le nouvel emplacement est la sortie
-			gagne = self._winner(lab)
-			
+			continuer = self._winner()
+
 			# on redéfinie la carte
-			lab[ord] = lab[ord][:abs] + 'X' + lab[ord][abs+1:]
-			
-			
-			
-			return lab, gagne # on renvoie la carte pour l'affichage.
+			_saving.lab[ord] = _saving.lab[ord][:abs] + 'X' + _saving.lab[ord][abs+1:]
+			fonction.Affichage(_saving.lab, _saving.obstacles)
+
+		return continuer # on renvoie la carte pour l'affichage.
 
 
-	
+
 	def __repr__(self):
 		return "abscisse : {}, ordonne : {}".format(self.abs, self.ord)
-		
-	def _Nord(self, lab):
-		"""Déplacement du robot vers le haut de l'écran. Renverra True si le mouvement est possible, 
+
+	def _nord(self, lab):
+		"""Déplacement du robot vers le haut de l'écran. Renverra True si le mouvement est possible,
 			False sinon."""
 		nvll_ord = self.ord - 1
 		if nvll_ord >= 0:
@@ -105,12 +104,12 @@ class robot:
 
 		else:
 			peut_bouger = False
-		
-		
+
+
 		return peut_bouger
-		
-	def _Sud(self, lab):
-		"""Déplacement du robot vers le bas de l'écran. Renverra True si le mouvement est possible, 
+
+	def _sud(self, lab):
+		"""Déplacement du robot vers le bas de l'écran. Renverra True si le mouvement est possible,
 			False sinon."""
 		nvll_ord = self.ord + 1
 		if  nvll_ord < len(lab):
@@ -120,17 +119,16 @@ class robot:
 			else:
 				print("vous ne pouvez pas, c'est un mur!")
 				peut_bouger = False
-		
+
 		else:
 			peut_bouger = False
-			
+
 		return peut_bouger
-			
-			
-	def _Est(self, lab):
-		"""Déplacement du robot vers la droite de l'écran. Renverra True si le mouvement est possible, 
+
+	def _est(self, lab):
+		"""Déplacement du robot vers la droite de l'écran. Renverra True si le mouvement est possible,
 			False sinon."""
-		
+
 		nvll_abs = self.abs + 1
 		if nvll_abs < len(lab[0]):
 			if lab[self.ord][nvll_abs] not in '0'  :
@@ -139,46 +137,48 @@ class robot:
 			else:
 				print("vous ne pouvez pas, c'est un mur!")
 				peut_bouger = False
-		
+
 		else:
 			peut_bouger = False
-	
+
 		return peut_bouger
-		
-	def _Ouest(self, lab):
-		"""Déplacement du robot vers la gauche de l'écran. Renverra True si le mouvement est possible, 
+
+	def _ouest(self, lab):
+		"""Déplacement du robot vers la gauche de l'écran. Renverra True si le mouvement est possible,
 			False sinon."""
 		nvll_abs = self.abs - 1
 		if nvll_abs >= 0 :
 			if lab[self.ord][nvll_abs] not in '0':
 				self.abs = nvll_abs
 				peut_bouger = True
-				
+
 			else:
 				print("vous ne pouvez pas, c'est un mur!")
 				peut_bouger = False
 
 		else:
-			peut_bouger = False	
+			peut_bouger = False
 
 		return peut_bouger
-			
-	def _winner(self, lab):
-		"""Renvoie True si on a atteint la sortie. Test effectué après chaque nouveau déplacement. 
+
+	def _winner(self):
+		"""Renvoie True si on veut continuer. Test effectué après chaque nouveau déplacement.
 			De cette manière on regarde si le futur emplacement de self est occupé par la sortie."""
-			
-		if lab[self.ord][self.abs] == 'U':
+
+		if _saving.lab[self.ord][self.abs] == 'U':
 			print('='*30)
 			print('VOUS AVEZ GAGNE!!!')
 			print('='*30)
-			return True
-		
+
+
+			continuer = _saving.fin_de_partie(fin='oui')
+
 		else:
-			return False
-			
-			
-			
-			
+			continuer = True
+
+		return continuer
+
+
 if __name__ == "__main__":
-	
+
 	os.system("pause")
