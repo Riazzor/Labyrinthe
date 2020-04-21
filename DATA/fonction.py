@@ -1,5 +1,6 @@
 import string
-
+import colorama
+colorama.init()
 
 def Deplacement():
 	"""fait choisir le déplacement ( + le nombre) à chaque tour au joueur.
@@ -107,7 +108,10 @@ def Affichage(lab, obstacles):
 			for obs in listeObs:
 				if (abs, ord) == obs[1] and j != 'X':
 					j = obs[0]
-			print(j, end = '')
+			if j !='X':
+				print("\x1b[32m"+j+"\x1b[0m", end = '')
+			else:
+				print("\x1b[31m"+j+"\x1b[0m", end = '')
 			abs += 1
 
 
