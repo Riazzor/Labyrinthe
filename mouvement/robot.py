@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path[:0] = ['../']
+from DATA import fonction
 from sauvegarde import GestionSauvegarde as GS
 
 
@@ -34,15 +35,19 @@ class Robot:
 			ord += 1
 			abs = 0
 
+		fonction.Affichage(_saving.lab, _saving.obstacles)
 
-	def mouve(self, dir, nb):
+
+	def mouve(self):
 		"""méthode appelé a chaque tour. dir sera une lettre 'n,s,e,o' pour choisir la direction
 			et appelé la méthode correspondante. nb sera le nombre de mouvement.
 			Il déplace ensuite X à l'intèrieur de la carte donné en argument.
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
+		dir, nb = fonction.Deplacement()
+
 		if dir == 'q':
-			_saving.fin_de_partie()
+			continuer = _saving.fin_de_partie()
 
 		else:
 			direction = {'n' : self._nord, 's' : self._sud, 'e' : self._est, 'o' : self._ouest}
@@ -71,13 +76,14 @@ class Robot:
 			ord = self.ord
 
 			# On regarde si le nouvel emplacement est la sortie
-			gagne = self._winner(lab)
+			continuer = self._winner()
 
 			# on redéfinie la carte
 			lab[ord] = lab[ord][:abs] + 'X' + lab[ord][abs+1:]
 
 		_saving.Sauvegarde()
-		return lab, gagne # on renvoie la carte pour l'affichage.
+		fonction.Affichage(_saving.lab, _saving.obstacles)
+		return continuer # on renvoie la carte pour l'affichage.
 
 
 
@@ -120,7 +126,6 @@ class Robot:
 
 		return peut_bouger
 
-
 	def _est(self, lab):
 		"""Déplacement du robot vers la droite de l'écran. Renverra True si le mouvement est possible,
 			False sinon."""
@@ -157,18 +162,22 @@ class Robot:
 
 		return peut_bouger
 
-	def _winner(self, lab):
+	def _winner(self):
 		"""Renvoie True si on a atteint la sortie. Test effectué après chaque nouveau déplacement.
 			De cette manière on regarde si le futur emplacement de self est occupé par la sortie."""
 
-		if lab[self.ord][self.abs] == 'U':
+		if self.lab[self.ord][self.abs] == 'U':
 			print('='*30)
 			print('VOUS AVEZ GAGNE!!!')
 			print('='*30)
-			return True
+
+
+			continuer = _saving.fin_de_partie(fin='oui')
 
 		else:
-			return False
+			continuer = True
+
+		return continuer
 
 
 if __name__ == "__main__":

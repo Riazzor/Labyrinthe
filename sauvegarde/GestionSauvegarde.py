@@ -73,7 +73,7 @@ class GestionSauvegarde():
 		return pseudo, lab, obstacles
 
 
-	def _ChoixCarte(self):
+	def _choix_carte(self):
 		#choix de la carte
 		"""Liste les cartes possibles. Fait ensuite choisir le joueur.
 			la carte est renvoyer sous forme de liste."""
@@ -112,31 +112,30 @@ class GestionSauvegarde():
 		return lab
 
 
-	def fin_de_partie(self, pseudo, lab, obstacles, fin = 'non'):
+	def fin_de_partie(self, fin='non'):
 		"""fonction appelée si carte terminée ou si le joueur désire quitter la partie.
 			La partie est supprimée si le jeu est terminé."""
 
 		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 		if fin == 'non':
-			self.Sauvegarde()
+			self.sauvegarde()
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
-			self._suppression(pseudo)
+			self._suppression()
 
 		if choix == 'o':
-
-			end = True
+			input("A la bonne week-end")
+			continuer = False
 
 		else:
-			end  False
+			continuer = True
+			self.lab, self.obstacles = self._nouvelle_partie()
 
-		return end
-
-
+		return continuer
 
 
 	#sauvegarde de la partie sans qu'elle soit terminée.
-	def Sauvegarde(self):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
+	def sauvegarde(self):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
 		"""fonction de sauvegarde appelé à chaque déplacement et à la fermeture du jeu.
 			on inclus le pseudo pour le nom de la sauvegarde, et lab et obstacles qui seront contenus dans le fichier de sauvegarde."""
 		pseudo = '/' + self.pseudo + '.lab'
@@ -150,13 +149,11 @@ class GestionSauvegarde():
 			mon_pickle = pickle.Pickler(sauve)
 			mon_pickle.dump(fichier_sauvegarde)
 
-
-
-	def _nouvelle_partie(self, pseudo):
+	def _nouvelle_partie(self, pseudo=self.pseudo):
 		"""fonction qui récupère la carte.
 		On sauvegarde ensuite la partie."""
 
-		lab = self._ChoixCarte()
+		lab = self._choix_carte()
 
 		# On va créer un dictionnaire des obstacles du labyrinthe. Pour l'instant de simple porte.
 		obstacles = {}
@@ -172,9 +169,8 @@ class GestionSauvegarde():
 				abs += 1
 			ord += 1
 			abs = 0
-		# for i in lab:
-			# print(i)
-		self.Sauvegarde()
+
+		self.sauvegarde()
 
 		return lab, obstacles
 
@@ -210,20 +206,17 @@ class GestionSauvegarde():
 
 		if not sortie:
 			print("Erreur lors du chargement de la carte : la sortie n'existe pas. \nLa partie va être supprimée")
-			_suppression(pseudo)
+			self._suppression()
 
 
 
 		return lab, obstacles
 
-
-
-
-	def _suppression(self, pseudo):
+	def _suppression(self):
 		"""Cette fonction est appelé pour supprimer une partie une fois celle-ci gagnée. Egalement si besoin particulier.
 			De cette manière, lors de la prochaine connection une nouvelle carte peut-être chargée"""
 
-		pseudo = '/' + pseudo + '.lab'
+		pseudo = '/' + self.pseudo + '.lab'
 		chemin = os.getcwd()
 		chemin += '/sauvegarde/Partie'
 		chemin += pseudo

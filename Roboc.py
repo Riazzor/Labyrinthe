@@ -13,26 +13,11 @@ print('='*30)
 print("Quitter : 'ctrl + c'")
 
 
-end = False
-while not end:
 
-	try:
+robi = Robot()
+continuer = False
 
-		robi = Robot()
-		gagne = False
+while continuer:
 
-		while not gagne:
-
-			fonction.Affichage(lab, obstacles)
-			dir, nb = fonction.Deplacement()
-			gagne = robi.mouve(dir, nb)
-			#GS._Sauvegarde(pseudo, lab, obstacles)
-
-
-		fonction.Affichage(lab, obstacles)
-		end = GS.finDePartie(pseudo, lab, obstacles, fin='oui')
-		if end == False:
-			lab = GS.choixCarte()
-
-	except KeyboardInterrupt:
-		end = GS.finDePartie(pseudo, lab, obstacles)
+	continuer = robi.mouve()
+	#GS._Sauvegarde(pseudo, lab, obstacles)
