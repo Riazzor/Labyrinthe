@@ -118,7 +118,7 @@ class GestionSauvegarde():
 
 		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 		if fin == 'non':
-			self.sauvegarde()
+			self._sauvegarde(self.pseudo)
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
 			self._suppression()
@@ -129,16 +129,16 @@ class GestionSauvegarde():
 
 		else:
 			continuer = True
-			self.lab, self.obstacles = self._nouvelle_partie()
+			self.lab, self.obstacles = self._nouvelle_partie(self.pseudo)
 
 		return continuer
 
 
 	#sauvegarde de la partie sans qu'elle soit terminée.
-	def sauvegarde(self):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
+	def _sauvegarde(self, pseudo):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
 		"""fonction de sauvegarde appelé à chaque déplacement et à la fermeture du jeu.
 			on inclus le pseudo pour le nom de la sauvegarde, et lab et obstacles qui seront contenus dans le fichier de sauvegarde."""
-		pseudo = '/' + self.pseudo + '.lab'
+		pseudo = '/' + pseudo + '.lab'
 		chemin = os.getcwd()
 		chemin += '/sauvegarde/Partie'
 		chemin += pseudo
@@ -149,7 +149,7 @@ class GestionSauvegarde():
 			mon_pickle = pickle.Pickler(sauve)
 			mon_pickle.dump(fichier_sauvegarde)
 
-	def _nouvelle_partie(self, pseudo=self.pseudo):
+	def _nouvelle_partie(self, pseudo):
 		"""fonction qui récupère la carte.
 		On sauvegarde ensuite la partie."""
 
@@ -170,7 +170,7 @@ class GestionSauvegarde():
 			ord += 1
 			abs = 0
 
-		self.sauvegarde()
+		self._sauvegarde(pseudo)
 
 		return lab, obstacles
 
