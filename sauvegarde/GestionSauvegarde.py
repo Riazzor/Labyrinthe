@@ -18,6 +18,8 @@ class GestionSauvegarde():
 		la liste d'obstacles est alors créer."""
 		self.pseudo, self.lab, self.obstacles = self._choix_pseudo()
 
+#Séparer le choix du pseudo et la nouvelle partie permettra de lancer une nouvelle partie sans
+#changer de pseudo.
 	def _choix_pseudo(self):	#va servir à lister les pseudos des joueurs. Permettra ensuite de lancer les parties.
 		"""on fait choisir au joueur son pseudo. Ce pseudo est ajouter a la liste des pseudos.
 			Si elle n'existe pas on l'a crée.
@@ -71,7 +73,7 @@ class GestionSauvegarde():
 		return pseudo, lab, obstacles
 
 
-	def choixCarte(self):
+	def _ChoixCarte(self):
 		#choix de la carte
 		"""Liste les cartes possibles. Fait ensuite choisir le joueur.
 			la carte est renvoyer sous forme de liste."""
@@ -116,33 +118,33 @@ class GestionSauvegarde():
 
 		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 		if fin == 'non':
-			self.sauvegarde(pseudo, lab, obstacles)
+			self.Sauvegarde()
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
 			self._suppression(pseudo)
 
-
 		if choix == 'o':
 
-			return True
+			end = True
 
 		else:
-			return False
+			end  False
+
+		return end
 
 
 
 
 	#sauvegarde de la partie sans qu'elle soit terminée.
-	def sauvegarde(self, pseudo, lab, obstacles):	#lab sera la liste contenant le labyrinthe et pseudo sera le pseudo du joueur.
-											# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
+	def Sauvegarde(self):		# Il va falloir rajouter dans la sauvegarde la liste des obstacles pour l'affichage après re-jeux.
 		"""fonction de sauvegarde appelé à chaque déplacement et à la fermeture du jeu.
 			on inclus le pseudo pour le nom de la sauvegarde, et lab et obstacles qui seront contenus dans le fichier de sauvegarde."""
-		pseudo = '/' + pseudo + '.lab'
+		pseudo = '/' + self.pseudo + '.lab'
 		chemin = os.getcwd()
 		chemin += '/sauvegarde/Partie'
 		chemin += pseudo
 
-		fichier_sauvegarde = {'carte' : lab, 'obstacles' : obstacles}
+		fichier_sauvegarde = {'carte' : self.lab, 'obstacles' : self.obstacles}
 
 		with open(chemin, 'bw') as sauve:
 			mon_pickle = pickle.Pickler(sauve)
@@ -154,7 +156,7 @@ class GestionSauvegarde():
 		"""fonction qui récupère la carte.
 		On sauvegarde ensuite la partie."""
 
-		lab = self.choixCarte()
+		lab = self._ChoixCarte()
 
 		# On va créer un dictionnaire des obstacles du labyrinthe. Pour l'instant de simple porte.
 		obstacles = {}
@@ -172,7 +174,7 @@ class GestionSauvegarde():
 			abs = 0
 		# for i in lab:
 			# print(i)
-		self.sauvegarde(pseudo, lab, obstacles)
+		self.Sauvegarde()
 
 		return lab, obstacles
 

@@ -1,7 +1,6 @@
 import os
 import sys
 sys.path[:0] = ['../']
-from DATA import fonction
 from sauvegarde import GestionSauvegarde as GS
 
 
@@ -14,17 +13,19 @@ class Robot:
 	"""La classe du robot à déplacer."""
 
 
-	def __init__(self, lab):
+	def __init__(self):
 		"""abs sera l'abscisse(emplacement sur la ligne) et ord l'ordonne(sur la colonne).
 			abs et ord sont déterminé avec la lecture de la carte neuve.
 			Les déplacements se feront en modifiants directement ces attributs.
 			ex : vers le nord : ord -= 1
 				 vers l'est : 	abs += 1...
 			"""
+		_saving = GS.GestionSauvegarde()
+
 		abs = 0
 		ord = 0
 
-		for i in lab:
+		for i in _saving.lab:
 			for j in i:
 				if j == 'X':
 					self.abs = abs
@@ -34,14 +35,14 @@ class Robot:
 			abs = 0
 
 
-	def mouve(self, dir, lab, nb):
+	def mouve(self, dir, nb):
 		"""méthode appelé a chaque tour. dir sera une lettre 'n,s,e,o' pour choisir la direction
 			et appelé la méthode correspondante. nb sera le nombre de mouvement.
 			Il déplace ensuite X à l'intèrieur de la carte donné en argument.
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
 		if dir == 'q':
-			exit()			#j'ai honte
+			_saving.fin_de_partie()
 
 		else:
 			direction = {'n' : self._nord, 's' : self._sud, 'e' : self._est, 'o' : self._ouest}
@@ -50,7 +51,7 @@ class Robot:
 
 			while (i in range(nb)) and peut_bouger:
 				# print('test : boucle n°', i+1)
-				peut_bouger = direction[dir](lab)
+				peut_bouger = direction[dir](_saving.lab)
 				i += 1
 
 			abs = 0
@@ -65,11 +66,6 @@ class Robot:
 				ord += 1
 				abs = 0
 
-
-
-
-
-
 			# on insère le nouvel emplacement de X
 			abs = self.abs
 			ord = self.ord
@@ -80,9 +76,8 @@ class Robot:
 			# on redéfinie la carte
 			lab[ord] = lab[ord][:abs] + 'X' + lab[ord][abs+1:]
 
-
-
-			return lab, gagne # on renvoie la carte pour l'affichage.
+		_saving.Sauvegarde()
+		return lab, gagne # on renvoie la carte pour l'affichage.
 
 
 
@@ -174,8 +169,6 @@ class Robot:
 
 		else:
 			return False
-
-
 
 
 if __name__ == "__main__":

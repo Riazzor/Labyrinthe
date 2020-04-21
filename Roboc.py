@@ -18,15 +18,15 @@ while not end:
 
 	try:
 
-		Robi = Robot()
+		robi = Robot()
 		gagne = False
 
 		while not gagne:
 
 			fonction.Affichage(lab, obstacles)
 			dir, nb = fonction.Deplacement()
-			lab, gagne = Robi.mouve(dir, lab, nb)
-			GS.sauvegarde(pseudo, lab, obstacles)
+			gagne = robi.mouve(dir, nb)
+			#GS._Sauvegarde(pseudo, lab, obstacles)
 
 
 		fonction.Affichage(lab, obstacles)
