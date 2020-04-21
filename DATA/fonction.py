@@ -46,12 +46,7 @@ def Deplacement():
 		else:
 			chx = ''
 			print("choix incomprehensible :", '/'.join(direction), "+ nombre de coup")
-			continue
-
-
-		if dir == 'q': 		# on vérifie que le joueur veuille bien quitter la partie
-			if ChoixLettre("Vous êtes sur de vouloir quitter ?", 'o', 'n') == 'n':
-				chx = ''
+			continue			
 
 	return dir, nb
 

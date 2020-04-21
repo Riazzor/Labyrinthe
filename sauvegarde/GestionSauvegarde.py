@@ -117,21 +117,27 @@ class GestionSauvegarde():
 		"""fonction appelée si carte terminée ou si le joueur désire quitter la partie.
 			La partie est supprimée si le jeu est terminé."""
 
-		choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
+
 		if fin == 'non':
+			choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
 			self._sauvegarde()
+			if choix == 'o':
+				input("A la bonne week-end")
+				continuer = False
+
+			else:
+				continuer = True
+
 		# si la carte est terminé, on supprime la sauvegarde pour le choix d'un nouvelle carte.
 		else:
 			self._suppression()
-
-		if choix == 'o':
-			input("A la bonne week-end")
-			continuer = False
-
-		else:
-			continuer = True
-			self.lab, self.obstacles = self._nouvelle_partie(self.pseudo)
-
+			choix = fonction.ChoixLettre("Voulez-vous quittez la partie?", 'o', 'n')
+			if choix == 'o':
+				input("A la bonne week-end")
+				continuer = False
+			else:
+				continuer = True
+				self.lab, self.obstacles = self._nouvelle_partie(self.pseudo)
 		return continuer
 
 

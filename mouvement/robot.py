@@ -8,11 +8,10 @@ from sauvegarde import GestionSauvegarde as GS
 """ Ce module va contenir la classe robot qui sera représenté dans le jeu par 'X'.
 	X aura des coordonnées pour attributs et des méthodes pour le déplacement."""
 
+_saving = GS.GestionSauvegarde()
 
-
-class Robot:
+class Robot():
 	"""La classe du robot à déplacer."""
-
 
 	def __init__(self):
 		"""abs sera l'abscisse(emplacement sur la ligne) et ord l'ordonne(sur la colonne).
@@ -21,12 +20,9 @@ class Robot:
 			ex : vers le nord : ord -= 1
 				 vers l'est : 	abs += 1...
 			"""
-		_saving = GS.GestionSauvegarde()
-		print(_saving.__dict__)
-
 		abs = 0
 		ord = 0
-
+		print("test")
 		for i in _saving.lab:
 			for j in i:
 				if j == 'X':
@@ -37,6 +33,8 @@ class Robot:
 			abs = 0
 
 		fonction.Affichage(_saving.lab, _saving.obstacles)
+		print("debug")
+
 
 
 	def mouve(self):
@@ -46,6 +44,7 @@ class Robot:
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
 		dir, nb = fonction.Deplacement()
+		print("debug22")
 
 		if dir == 'q':
 			continuer = _saving.fin_de_partie()
@@ -64,10 +63,10 @@ class Robot:
 			ord = 0
 
 			# on parcourt la carte et on efface l'ancienne position de X
-			for i in lab:
+			for i in _saving.lab:
 				for j in i:
 					if j == 'X':
-						lab[ord] = lab[ord][:abs] + ' ' + lab[ord][abs+1:]
+						_saving.lab[ord] = _saving.lab[ord][:abs] + ' ' + _saving.lab[ord][abs+1:]
 					abs += 1
 				ord += 1
 				abs = 0
@@ -80,10 +79,9 @@ class Robot:
 			continuer = self._winner()
 
 			# on redéfinie la carte
-			lab[ord] = lab[ord][:abs] + 'X' + lab[ord][abs+1:]
+			_saving.lab[ord] = _saving.lab[ord][:abs] + 'X' + _saving.lab[ord][abs+1:]
+			fonction.Affichage(_saving.lab, _saving.obstacles)
 
-		_saving.Sauvegarde()
-		fonction.Affichage(_saving.lab, _saving.obstacles)
 		return continuer # on renvoie la carte pour l'affichage.
 
 
@@ -164,10 +162,10 @@ class Robot:
 		return peut_bouger
 
 	def _winner(self):
-		"""Renvoie True si on a atteint la sortie. Test effectué après chaque nouveau déplacement.
+		"""Renvoie True si on veut continuer. Test effectué après chaque nouveau déplacement.
 			De cette manière on regarde si le futur emplacement de self est occupé par la sortie."""
 
-		if self.lab[self.ord][self.abs] == 'U':
+		if _saving.lab[self.ord][self.abs] == 'U':
 			print('='*30)
 			print('VOUS AVEZ GAGNE!!!')
 			print('='*30)
