@@ -8,7 +8,7 @@ from sauvegarde import GestionSauvegarde as GS
 """ Ce module va contenir la classe robot qui sera représenté dans le jeu par 'X'.
 	X aura des coordonnées pour attributs et des méthodes pour le déplacement."""
 
-_saving = GS.GestionSauvegarde()
+_savy = GS.GestionSauvegarde()
 
 class Robot():
 	"""La classe du robot à déplacer."""
@@ -23,7 +23,7 @@ class Robot():
 		abs = 0
 		ord = 0
 		print("test")
-		for i in _saving.lab:
+		for i in _savy.lab:
 			for j in i:
 				if j == 'X':
 					self.abs = abs
@@ -32,8 +32,8 @@ class Robot():
 			ord += 1
 			abs = 0
 
-		fonction.Affichage(_saving.lab, _saving.obstacles)
-		
+		fonction.Affichage(_savy.lab, _savy.obstacles)
+
 
 
 
@@ -47,7 +47,7 @@ class Robot():
 
 
 		if dir == 'q':
-			continuer = _saving.fin_de_partie()
+			continuer = _savy.fin_de_partie()
 
 		else:
 			direction = {'n' : self._nord, 's' : self._sud, 'e' : self._est, 'o' : self._ouest}
@@ -56,17 +56,17 @@ class Robot():
 
 			while (i in range(nb)) and peut_bouger:
 				# print('test : boucle n°', i+1)
-				peut_bouger = direction[dir](_saving.lab)
+				peut_bouger = direction[dir](_savy.lab)
 				i += 1
 
 			abs = 0
 			ord = 0
 
 			# on parcourt la carte et on efface l'ancienne position de X
-			for i in _saving.lab:
+			for i in _savy.lab:
 				for j in i:
 					if j == 'X':
-						_saving.lab[ord] = _saving.lab[ord][:abs] + ' ' + _saving.lab[ord][abs+1:]
+						_savy.lab[ord] = _savy.lab[ord][:abs] + ' ' + _savy.lab[ord][abs+1:]
 					abs += 1
 				ord += 1
 				abs = 0
@@ -79,8 +79,8 @@ class Robot():
 			continuer = self._winner()
 
 			# on redéfinie la carte
-			_saving.lab[ord] = _saving.lab[ord][:abs] + 'X' + _saving.lab[ord][abs+1:]
-			fonction.Affichage(_saving.lab, _saving.obstacles)
+			_savy.lab[ord] = _savy.lab[ord][:abs] + 'X' + _savy.lab[ord][abs+1:]
+			fonction.Affichage(_savy.lab, _savy.obstacles)
 
 		return continuer # on renvoie la carte pour l'affichage.
 
@@ -165,13 +165,13 @@ class Robot():
 		"""Renvoie True si on veut continuer. Test effectué après chaque nouveau déplacement.
 			De cette manière on regarde si le futur emplacement de self est occupé par la sortie."""
 
-		if _saving.lab[self.ord][self.abs] == 'U':
+		if _savy.lab[self.ord][self.abs] == 'U':
 			print('='*30)
 			print('VOUS AVEZ GAGNE!!!')
 			print('='*30)
 
 
-			continuer = _saving.fin_de_partie(fin='oui')
+			continuer = _savy.fin_de_partie(fin='oui')
 
 		else:
 			continuer = True
