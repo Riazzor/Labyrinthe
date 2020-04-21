@@ -17,7 +17,7 @@ class GestionSauvegarde():
 		"""En se créant il demandera le pseudo, la carte.
 		la liste d'obstacles est alors créer."""
 		self.pseudo, self.lab, self.obstacles = self._choix_pseudo()
-		self.sauvegarde()
+		self._sauvegarde()
 
 #Séparer le choix du pseudo et la nouvelle partie permettra de lancer une nouvelle partie sans
 #changer de pseudo.
