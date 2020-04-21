@@ -14,11 +14,11 @@ print("Quitter : 'ctrl + c'")
 
 
 robi = Robot()
-continuer = False
+continuer = True
 i = 0
 while continuer:
 
 	continuer = robi.mouve()
 	i += 1
 	#GS._Sauvegarde(pseudo, lab, obstacles)
-print(i)
+print(i, continuer)

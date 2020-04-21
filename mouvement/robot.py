@@ -22,6 +22,7 @@ class Robot:
 				 vers l'est : 	abs += 1...
 			"""
 		_saving = GS.GestionSauvegarde()
+		print(_saving.__dict__)
 
 		abs = 0
 		ord = 0
