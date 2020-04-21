@@ -3,7 +3,7 @@ import pickle
 import sys
 sys.path[:0]=['../']
 from DATA import fonction
-# from mouvement.robot import robot
+
 
 """Gestion des différentes sauvegardes de parties. Les fichiers de sauvegarde se termineront
 	en '.lab' et seront tous dans le même dossier sauvegarde avec une hiérarchie selon le type de sauvegarde.

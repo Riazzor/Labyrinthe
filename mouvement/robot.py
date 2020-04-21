@@ -33,7 +33,7 @@ class Robot():
 			abs = 0
 
 		fonction.Affichage(_saving.lab, _saving.obstacles)
-		print("debug")
+		
 
 
 
@@ -44,7 +44,7 @@ class Robot():
 			Renvoie le nouveau labyrinthe et test si la sortie est atteinte."""
 
 		dir, nb = fonction.Deplacement()
-		print("debug22")
+
 
 		if dir == 'q':
 			continuer = _saving.fin_de_partie()

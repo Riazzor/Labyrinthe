@@ -1,8 +1,6 @@
 import string
 
 
-
-
 def Deplacement():
 	"""fait choisir le déplacement ( + le nombre) à chaque tour au joueur.
 		Renvoie la direction choisie et le nombre de déplacement."""
@@ -46,7 +44,7 @@ def Deplacement():
 		else:
 			chx = ''
 			print("choix incomprehensible :", '/'.join(direction), "+ nombre de coup")
-			continue			
+			continue
 
 	return dir, nb
 
