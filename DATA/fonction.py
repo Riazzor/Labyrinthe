@@ -1,12 +1,13 @@
 import string
-
+import colorama
+colorama.init()
 
 def Deplacement():
 	"""fait choisir le déplacement ( + le nombre) à chaque tour au joueur.
 		Renvoie la direction choisie et le nombre de déplacement."""
 	direction = ('n', 's', 'e', 'o', 'q')
 
-	# chx = fonction.ChoixLettre("tentative", *direction)
+
 	chx = ''
 	while chx == '':
 		chx = input("Dans quel direction?").lower()
@@ -107,15 +108,13 @@ def Affichage(lab, obstacles):
 			for obs in listeObs:
 				if (abs, ord) == obs[1] and j != 'X':
 					j = obs[0]
-			print(j, end = '')
+			if j !='X':
+				print("\x1b[32m"+j+"\x1b[0m", end = '')
+			else:
+				print("\x1b[31m"+j+"\x1b[0m", end = '')
 			abs += 1
 
 
-			# if (abs, ord) in obstacles.values() and j != 'X':	# si un emplacement d'obstacle n'est pas occupé par X on l'affiche
-				# print('.', end = '')
-			# else :
-				# print(j, end = '')
-			# abs += 1
 
 		ord += 1
 		abs = 0
