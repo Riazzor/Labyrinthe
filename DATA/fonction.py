@@ -10,7 +10,7 @@ def Deplacement():
 
 	chx = ''
 	while chx == '':
-		chx = input("Dans quel direction?").lower()
+		chx = input("Dans quelle direction?").lower()
 		if len(chx) == 1:		# si le joueur n'entre qu'un seul caractère
 			if chx not in direction:
 				print("choix incomprehensible :", '/'.join(direction), "+ nombre de coup")

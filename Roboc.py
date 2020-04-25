@@ -17,7 +17,7 @@ roby = Robot()
 continuer = True
 i = 0
 while continuer:
-
+	print("n : Nord - s : Sud - e : Est - o : Ouest")
 	continuer = roby.mouve()
 	i += 1
 	#GS._Sauvegarde(pseudo, lab, obstacles)
