@@ -23,7 +23,7 @@ class GestionSauvegarde():
 #changer de pseudo.
 	def _choix_pseudo(self):	#va servir à lister les pseudos des joueurs. Permettra ensuite de lancer les parties.
 		"""on fait choisir au joueur son pseudo. Ce pseudo est ajouter a la liste des pseudos.
-			Si elle n'existe pas on l'a crée.
+			Si elle n'existe pas on la crée.
 			Choix de carte si nouvelle partie, chargement de la partie si elle existe.
 			Renvoie le pseudo, le labyrinthe et la liste d'obstacle qui seront
 			défini comme attributs de l'instance."""
@@ -34,7 +34,7 @@ class GestionSauvegarde():
 			while pseudo == '':
 				pseudo = input("Choisissez le pseudo : \n")
 				if pseudo == '' or len(pseudo) < 3:
-					print("minimum 3 caractères alpha-numérique")
+					print("minimum 3 caractères alpha-numériques")
 					pseudo = ''
 
 
