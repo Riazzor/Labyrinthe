@@ -7,7 +7,7 @@ def Deplacement():
 		Renvoie la direction choisie et le nombre de déplacement."""
 	direction = ('n', 's', 'e', 'o', 'q')
 
-	
+
 	chx = ''
 	while chx == '':
 		chx = input("Dans quel direction?").lower()
@@ -115,12 +115,7 @@ def Affichage(lab, obstacles):
 			abs += 1
 
 
-			# if (abs, ord) in obstacles.values() and j != 'X':	# si un emplacement d'obstacle n'est pas occupé par X on l'affiche
-				# print('.', end = '')
-			# else :
-				# print(j, end = '')
-			# abs += 1
-
+			
 		ord += 1
 		abs = 0
 		print()
